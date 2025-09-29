@@ -1,0 +1,36 @@
+# Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
+
+pkgname=unicode-character-database
+pkgver=17.0.0
+pkgrel=1
+pkgdesc="Unicode Character Database"
+url="https://www.unicode.org/versions/Unicode$pkgver/"
+arch=(any)
+license=(Unicode-TOU)
+source=(
+  "UCD-$pkgver.zip::https://www.unicode.org/Public/$pkgver/ucd/UCD.zip"
+  "Unihan-$pkgver.zip::https://www.unicode.org/Public/$pkgver/ucd/Unihan.zip"
+  "unicode-license-$pkgver.txt::https://www.unicode.org/license.txt"
+)
+noextract=({UCD,Unihan}-$pkgver.zip)
+b2sums=('0392cc9d42159bc42152751f6eff9a30115b64097669f03a0eb7eb14ca4dabbf3f0ac4d07189364ef108ef37da34849e5e040c0c214a10e8390bb12a4421432d'
+        '9a3c9335e7a36c000d9d6db892479036403c0f00c620bb5e6c6832a4385f4f5459f5ac9147e076b15f54bf8016f067aa73ac905777403e6de5f27697e56733a4'
+        'a8b9125190e22b02f532a3cccba286342b0bbf30321e442e7050f032ecb5e85ec032eef33dd4faa7467a66cd1c24f716db7450685a1d12f44c8623c0bfa0f1dd')
+
+package() {
+  local x
+  for x in UCD Unihan; do
+    install -Dm644 $x-$pkgver.zip "$pkgdir/usr/share/unicode/$x.zip"
+    bsdtar -C "$pkgdir/usr/share/unicode" -x --no-same-owner --no-same-permissions -f $x-$pkgver.zip
+  done
+
+  # FS#49938: A bunch of compatibility symlinks
+  ln -s . "$pkgdir/usr/share/unicode/ucd"
+  for x in $pkgname unicode-data unidata; do
+    ln -s unicode "$pkgdir/usr/share/$x"
+  done
+
+  install -Dm644 unicode-license-$pkgver.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+}
+
+# vim:set sw=2 sts=-1 et:
