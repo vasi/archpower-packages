@@ -1,0 +1,31 @@
+# Maintainer: Dave Vasilevsky <dave@vasilevsky.ca>
+pkgname=mouseemu-git
+pkgver=r3.f5493bd
+pkgrel=1
+pkgdesc="Emulate mouse buttons and mouse wheel"
+arch=(x86_64 powerpc64le powerpc64 powerpc espresso)
+license=('GPL-2.0-or-later')
+url="https://github.com/wyatt8740/mouseemu"
+depends=('glibc')
+makedepends=('git')
+source=('git+https://github.com/wyatt8740/mouseemu'
+        'mouseemu.service')
+sha256sums=('SKIP'
+            'a1c9c13040b50ca0a25a0cf71b144d113c417411427e402982eb9bc365e3348a')
+
+pkgver() {
+    cd "$srcdir/mouseemu"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+  cd "$srcdir/mouseemu"
+  make
+}
+
+package() {
+  cd "$srcdir/mouseemu"
+  install -D -m 755 mouseemu "${pkgdir}/usr/bin/mouseemu"
+  install -D -m 644 mouseemu.8 "${pkgdir}/usr/share/man/man8/mouseemu.8"
+  install -D -m 644 "$srcdir/mouseemu.service" "${pkgdir}/usr/lib/systemd/system/mouseemu.service"
+}

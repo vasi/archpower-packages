@@ -1,0 +1,9 @@
+[Unit]
+Description=mouseemu
+
+[Service]
+ExecStart=/usr/bin/mouseemu -nofork
+KillSignal=SIGKILL
+
+[Install]
+WantedBy=multi-user.target
