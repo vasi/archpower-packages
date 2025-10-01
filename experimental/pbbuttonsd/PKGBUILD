@@ -1,0 +1,58 @@
+# Maintainer: Dave Vasilevsky <dave@vasilevsky.ca>
+pkgname=pbbuttonsd
+pkgver=0.8.1a
+pkgrel=1
+pkgdesc="PowerBook buttons, power and brightness daemon"
+arch=(powerpc)
+license=('GPL-2.0-or-later')
+url="https://sourceforge.net/projects/pbbuttons/"
+depends=('gettext' 'alsa-lib' 'glib2')
+backup=('etc/pbbuttonsd.cnf' 'etc/power/pmcs-config')
+source=(
+  "https://sourceforge.net/projects/pbbuttons/files/${pkgname}/${pkgver}/${pkgname}-${pkgver}.tar.gz"
+  01-no-ftbfs-format-security.diff
+  English-language-fixes.patch
+  disable-powersave-under-gpm.patch
+  disable-autorescan.patch
+  cpufreq.patch
+  laptopmode.patch
+  bug774634.patch
+  fnmode.patch
+  comp_warnings.patch
+  rundir.patch
+  modern.patch
+)
+sha256sums=('254cc391bcb0a4a58a62224b4cca2b29fdf9ca174c1dc18ab0784f1a86465ed1'
+            '32b709dc1b11f8ad9d2d3337886127f3dec5ff55708cb88ab11be119de3503a6'
+            '09c2d1ac21079a1f9a80cada4fd9fd2d41db0bb50f95b219a6fd9279a8ea2a68'
+            '400c2dfdfaaf16d49fd605562ca62ef70282682ecac645abfbf0f33d0ead20ed'
+            '8ee1f00654e55ff2cad32bdeb1e93a15e0055476052221d57dbf85a8ea9ef3f2'
+            'b08a6b1fc07cb116901e4ee73537960aaf4ad07c49a67f58967c98a1ea55a71c'
+            '6146d287f59fdb37f51c2560cc8d4fb8407e4131a1975fed135608b6e7947691'
+            'bed4efbe38bf6c1b8b5714fcda696964e3a35423708f0240ab6783b3c4297700'
+            '33cd90e8784b8f04b62455920d165b63eee7149ae46a0deaf75e834e1b715153'
+            '6425eaa882b76d88498e0e973ca98996a812810dfc38f9ef0296168e9f37c35a'
+            'def718444108fa3e0c1a5c51b0617c4246be100cfcf6ccf40c05409031b3b8e4'
+            'fb35a3f7d9da275461a8acb8fc5fa27bc90aae1c29675222dfaa5c28210de832')
+
+prepare() {
+  cd $pkgname-$pkgver
+
+  local src
+  for src in "${source[@]}"; do
+      [[ $src = *.patch || $src = *.diff ]] || continue
+      echo "Applying patch $src..."
+      patch -Np1 -i "../$src"
+  done
+}
+
+build() {
+  cd ${pkgname}-${pkgver}
+  ./configure --prefix=/usr --sysconfdir=/etc
+  make -j1
+}
+
+package() {
+  cd ${pkgname}-${pkgver}
+  make -j1 DESTDIR="${pkgdir}" install
+}

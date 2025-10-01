@@ -1,0 +1,98 @@
+diff --git i/src/class_backlight.h w/src/class_backlight.h
+index db2ccdf..847c194 100644
+--- i/src/class_backlight.h
++++ w/src/class_backlight.h
+@@ -40,7 +40,7 @@ struct driver_backlight {
+ 	char *name;
+ 	int  (*get_brightness)();
+ 	int  (*get_brightness_max)();
+-	void (*set_brightness)();
++	void (*set_brightness)(int);
+ 	void (*driver_exit)();
+ };
+ 
+diff --git i/src/driver_mixer_alsa.c w/src/driver_mixer_alsa.c
+index ae68b0d..4a300d6 100644
+--- i/src/driver_mixer_alsa.c
++++ w/src/driver_mixer_alsa.c
+@@ -32,7 +32,7 @@
+ 
+ #define SECTION "MODULE MIXER ALSA"
+ 
+-struct driver_alsamixer {
++static struct driver_alsamixer {
+ 	char *card;	 /* name of the soundcard (usually "default" is fine) */
+ 	GString *channels;	/* channel names to use */
+ 	struct {
+diff --git i/src/driver_mixer_oss.c w/src/driver_mixer_oss.c
+index ef9994e..4bc7c2b 100644
+--- i/src/driver_mixer_oss.c
++++ w/src/driver_mixer_oss.c
+@@ -37,7 +37,7 @@
+ 
+ #define SECTION "MODULE MIXER OSS"
+ 
+-struct driver_ossmixer {
++static struct driver_ossmixer {
+ 	char *device;	 /** OSS mixer device, allocated string */
+ 	GString *channels;
+ 	struct {
+diff --git i/src/input_manager.c w/src/input_manager.c
+index 2f9c46a..5ea1ad8 100644
+--- i/src/input_manager.c
++++ w/src/input_manager.c
+@@ -384,7 +384,7 @@ handleInputSource (GIOChannel *io, GIOCondition condition, gpointer data)
+  * @{
+  */
+ InputSource*
+-addInputSource (int fd, int (*handler)(), gpointer user_data, gboolean close_on_exit)
++addInputSource (int fd, int (*handler)(int, gpointer), gpointer user_data, gboolean close_on_exit)
+ {
+ 	struct moddata_inputmanager *base = &modbase_inputmanager;
+ 	InputSource *src;
+@@ -423,7 +423,7 @@ addInputSource (int fd, int (*handler)(), gpointer user_data, gboolean close_on_
+ /* --- queue managers --- */
+ 
+ int
+-register_function (int queueid, void (*func)())
++register_function (int queueid, void (*func)(struct tagitem *))
+ {
+   struct moddata_inputmanager *base = &modbase_inputmanager;
+   inputqueue_t *queue = base->iqueues[queueid];
+@@ -488,7 +488,7 @@ process_queue (int queueid, struct tagitem *taglist)
+  * were successful.
+  */ 
+ void
+-ipc_handler ()
++ipc_handler (struct tagitem *)
+ {
+ 	struct pbbmessage *msg;
+ 	struct tagitem *source, *dest;
+diff --git i/src/input_manager.h w/src/input_manager.h
+index 286c6f6..cf2f31c 100644
+--- i/src/input_manager.h
++++ w/src/input_manager.h
+@@ -15,7 +15,7 @@
+ #include <glib.h>
+ #include <pbbtaglist.h>
+ 
+-typedef void (*inputqueue_t)();
++typedef void (*inputqueue_t)(struct tagitem *);
+ 
+ #define MAXINPUTS   16
+ #define TIMERCOUNT  3     /* ATTENTION: keep an eye on the init routine */
+@@ -65,11 +65,11 @@ gint cbEventDevices (gconstpointer a, gconstpointer b);
+ void scanEventDevices ();
+ void destroyInputSource (gpointer data);
+ gboolean handleInputSource (GIOChannel *io, GIOCondition condition, gpointer data);
+-InputSource *addInputSource (int fd, int (*handler)(), gpointer user_data, gboolean close_on_exit);
+-int register_function (int queueid, void (*func)());
++InputSource *addInputSource (int fd, int (*handler)(int, gpointer), gpointer user_data, gboolean close_on_exit);
++int register_function (int queueid, void (*func)(struct tagitem *));
+ tag_t process_queue_single (int queueid, tag_t tag, tag_t data);
+ int process_queue (int queueid, struct tagitem *taglist);
+-void ipc_handler ();
++void ipc_handler (struct tagitem *);
+ gboolean input_event_handler (int fd, gpointer user_data);
+ /*gboolean mice_handler (int fd, gpointer user_data);*/
+ gboolean cb_timer100 (gpointer data);
