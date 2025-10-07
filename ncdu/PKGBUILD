@@ -1,0 +1,31 @@
+# Maintainer: Eli Schwartz <eschwartz@archlinux.org>
+# Maintainer: Levente Polyak <anthraxx[at]archlinux[dot]org>
+# Contributor: lp76 <l.peduto@gmail.com>
+# Contributor: Daenyth <Daenyth+Arch AT gmail DOT com>
+# Contributor: Gaetan Bisson <bisson@archlinux.org>
+
+pkgname=ncdu
+pkgver=1.22
+pkgrel=1
+pkgdesc='Disk usage analyzer with an ncurses interface'
+url='https://dev.yorhel.nl/ncdu'
+license=('MIT')
+depends=('ncurses')
+arch=('x86_64' 'powerpc')
+source=("https://dev.yorhel.nl/download/${pkgname}-${pkgver}.tar.gz")
+sha256sums=('0ad6c096dc04d5120581104760c01b8f4e97d4191d6c9ef79654fa3c691a176b')
+b2sums=('f330bcbdcd3774a7f9215b8725822555c95940ae7a93e7256f93c8c7aab08fc5fc80f34e9899a5ad2300b6292ff17dec21f0de468cd8c925f8a94cf66400e722')
+
+build() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    ./configure --prefix=/usr
+    make
+}
+
+package() {
+    cd "${srcdir}/${pkgname}-${pkgver}"
+
+    make DESTDIR="${pkgdir}" install
+    install -Dm644 COPYING "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
