@@ -1,0 +1,40 @@
+# Maintainer: Christian Hesse <mail@eworm.de>
+# Contributor: Aaron Fischer <mail@aaron-fischer.net>
+# Contributor: Steven Allen <steven@stebalien.com>
+# Contributor: trile7 at gmail dot com
+# Contributor: Ernia <monghitri@aruba.it>
+
+pkgname=yad-gtk2
+pkgver=0.42.85
+pkgrel=1
+pkgdesc='Gtk2 fork of yad'
+url='https://github.com/step-/yad'
+arch=('x86_64' 'powerpc')
+license=('GPL3')
+depends=('gtk2')
+conflicts=('yad')
+makedepends=('autoconf' 'automake' 'intltool')
+source=("https://github.com/step-/yad/archive/refs/tags/${pkgver}.tar.gz")
+sha256sums=('c50756a1cf6ba35167ef77a69b7733ee6d16a1912332c4f66db75b2f18ec7fc6')
+
+prepare() {
+  cd "${srcdir}/yad-${pkgver}"
+  autoreconf -ivf -I /usr/share/gettext/m4
+  intltoolize
+}
+
+build() {
+  cd "${srcdir}/yad-${pkgver}"
+
+  ./configure --prefix=/usr \
+    --with-gtk=gtk2 --disable-html --disable-spell --disable-sourceview \
+    --enable-icon-browser
+
+  make
+}
+
+package() {
+  cd "${srcdir}/yad-${pkgver}"
+
+  make DESTDIR="${pkgdir}" install
+}
