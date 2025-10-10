@@ -1,0 +1,48 @@
+From 8870815cc64f172228322891053943d7ab8557bb Mon Sep 17 00:00:00 2001
+From: Alexander Golubev <fatzer2@gmail.com>
+Date: Mon, 28 Jul 2025 22:51:51 +0300
+Subject: filters/xsltfilter: fix FTBFS against libxml 2.13+
+
+See: https://gitlab.gnome.org/GNOME/libxml2/-/commit/c011e7605d42030cf21acdece466aaddaeb5a360
+Closes: https://mirror.git.trinitydesktop.org/gitea/TDE/koffice/issues/96
+Signed-off-by: Alexander Golubev <fatzer2@gmail.com>
+---
+ filters/xsltfilter/export/xsltproc.cpp | 4 ++++
+ filters/xsltfilter/import/xsltproc.cpp | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/filters/xsltfilter/export/xsltproc.cpp b/filters/xsltfilter/export/xsltproc.cpp
+index 3bd20408a..d252cdcd6 100644
+--- a/filters/xsltfilter/export/xsltproc.cpp
++++ b/filters/xsltfilter/export/xsltproc.cpp
+@@ -287,7 +287,11 @@ int XSLTProc::parse()
+      * disable CDATA from being built in the document tree
+      */
+     xmlDefaultSAXHandlerInit();
++#if LIBXML_VERSION < 21300
++    // In 2.13.0 this global variable was made constant and claimed that
++    // it "hasn't had an effect for a long time"
+     xmlDefaultSAXHandler.cdataBlock = NULL;
++#endif // LIBXML_VERSION
+ 
+     if ((cur != NULL) && (cur->errors == 0))
+ 	{
+diff --git a/filters/xsltfilter/import/xsltproc.cpp b/filters/xsltfilter/import/xsltproc.cpp
+index 3bd20408a..d252cdcd6 100644
+--- a/filters/xsltfilter/import/xsltproc.cpp
++++ b/filters/xsltfilter/import/xsltproc.cpp
+@@ -287,7 +287,11 @@ int XSLTProc::parse()
+      * disable CDATA from being built in the document tree
+      */
+     xmlDefaultSAXHandlerInit();
++#if LIBXML_VERSION < 21300
++    // In 2.13.0 this global variable was made constant and claimed that
++    // it "hasn't had an effect for a long time"
+     xmlDefaultSAXHandler.cdataBlock = NULL;
++#endif // LIBXML_VERSION
+ 
+     if ((cur != NULL) && (cur->errors == 0))
+ 	{
+-- 
+cgit v1.2.3
+
