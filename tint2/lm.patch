@@ -1,0 +1,13 @@
+diff --git i/src/tint2conf/CMakeLists.txt w/src/tint2conf/CMakeLists.txt
+index f041a47..79391bb 100644
+--- i/src/tint2conf/CMakeLists.txt
++++ w/src/tint2conf/CMakeLists.txt
+@@ -64,7 +64,7 @@ target_link_libraries( tint2conf ${X11_T2C_LIBRARIES}
+                                  ${IMLIB2_LIBRARIES}
+                                  ${GTHREAD2_LIBRARIES}
+                                  ${GTK3_LIBRARIES}
+-                                 ${RSVG_LIBRARIES} )
++                                 ${RSVG_LIBRARIES} -lm )
+ 
+ add_definitions( -DINSTALL_PREFIX=\"${CMAKE_INSTALL_PREFIX}\" )
+ add_definitions( -DLOCALEDIR=\"${CMAKE_INSTALL_FULL_LOCALEDIR}\" )
