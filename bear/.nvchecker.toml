@@ -1,0 +1,4 @@
+[bear]
+source = "git"
+git = "https://github.com/rizsotto/Bear.git"
+prefix = "v"
