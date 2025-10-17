@@ -1,0 +1,13 @@
+pkgbase = unibilium
+	pkgdesc = A terminfo parsing library
+	pkgver = 2.1.2
+	pkgrel = 1
+	url = https://github.com/neovim/unibilium
+	arch = x86_64
+	license = LGPL3
+	depends = glibc
+	provides = libunibilium.so
+	source = unibilium-2.1.2.tar.gz::https://github.com/neovim/unibilium/archive/v2.1.2.tar.gz
+	sha512sums = 8bc50b3662fcb1b52055fed028926d8c296169b6b1cfefef9bb37a435321ee6e005c4166c1e68c2959e5f6d4ffe8f44d8ea87d6dcc967176d473ae918ff3018f
+
+pkgname = unibilium
