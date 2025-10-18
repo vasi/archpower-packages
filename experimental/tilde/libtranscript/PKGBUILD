@@ -1,0 +1,32 @@
+# Maintainer: Gertjan Halkes <arch at ghalkes dot nl>
+pkgname=libtranscript
+pkgver=0.3.4
+pkgrel=1
+pkgdesc="A character set conversion library."
+arch=('x86_64' 'i686' 'powerpc')
+url="http://os.ghalkes.nl/$pkgname.html"
+license=('GPL3')
+groups=()
+depends=('gettext')
+makedepends=()
+optdepends=()
+conflicts=()
+replaces=()
+backup=()
+options=('!libtool')
+install=''
+changelog=
+source=("http://os.ghalkes.nl/dist/$pkgname-$pkgver.tar.bz2")
+noextract=()
+md5sums=('9735b983269223c4c4cad94363671b74')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr --with-ucm2ltc
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}

@@ -1,0 +1,32 @@
+# Maintainer: Gertjan Halkes <arch at ghalkes dot nl>
+pkgname=libt3key
+pkgver=0.2.11
+pkgrel=1
+pkgdesc="Terminal key sequence database library."
+arch=('x86_64' 'i686' 'powerpc')
+url="http://os.ghalkes.nl/t3/$pkgname.html"
+license=('GPL3')
+groups=()
+depends=('libt3config>=0.2.5' 'libxcb')
+makedepends=()
+optdepends=()
+conflicts=()
+replaces=()
+backup=()
+options=('!libtool')
+install=''
+changelog=
+source=("http://os.ghalkes.nl/dist/$pkgname-$pkgver.tar.bz2")
+noextract=()
+md5sums=('f92900b715ba4c10cc3e88e35071e719')
+
+build() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "${srcdir}/${pkgname}-${pkgver}"
+  make DESTDIR="${pkgdir}" install
+}
