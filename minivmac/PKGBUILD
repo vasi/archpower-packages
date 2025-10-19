@@ -1,0 +1,39 @@
+# Maintainer: Alexander Jacocks <alexander@redhat.com>
+# Contributor: Lu Xu <oliver_lew@outlook.com>
+# Contributor: LIN Ruohshoei <lin dot ruohshoei plus archlinux at gmail dot com>
+# Contributor: Eric DeStefano <eric at ericdestefano dot com>
+# Contributor: Iñigo Alvarez <alvarezviu@gmail.com>
+# Contributor: William Termini <aur@termini.me>
+
+pkgname=minivmac-git
+pkgver=r1
+pkgrel=1
+pkgdesc="A miniature early Macintosh emulator"
+arch=(powerpc) 
+url="https://github.com/minivmac/minivmac"
+license=('GPL2')
+depends=('bash' 'libx11')
+source=("git+https://github.com/minivmac/minivmac"
+        minivmac.desktop
+        minivmac.png
+)
+sha256sums=('SKIP'
+            'b7790404a7ef404234cf25d5e29c0e830827841c02519999f321e330c02366ac'
+            'f003d3c5a92442f3f143153879a7a21e301d447e850ebba119605a2a733f6e2b')
+
+build() {
+  cd $srcdir/minivmac
+  gcc setup/tool.c -o setup_t
+  ./setup_t -t lppc -api xwn -mf 2 -ci 0 > build.sh
+  source build.sh
+  make
+}
+
+package() {
+  cd $srcdir
+  install -Dm644 "minivmac.desktop" "${pkgdir}/usr/share/applications/minivmac.desktop"
+  install -Dm644 "minivmac.png" "${pkgdir}/usr/share/icons/hicolor/64x64/apps/minivmac.png"
+
+  cd minivmac
+  install -Dm755 minivmac $pkgdir/usr/bin/minivmac
+}
