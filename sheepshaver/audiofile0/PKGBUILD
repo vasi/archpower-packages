@@ -1,0 +1,38 @@
+# Maintainer: Ray Rashif <schiv@archlinux.org>
+# Contributor: dorphell <dorphell@archlinux.org>
+
+pkgname=audiofile0
+pkgver=0.3.2
+pkgrel=1
+pkgdesc="Silicon Graphics Audio File Library"
+arch=('i686' 'x86_64' 'powerpc')
+url="http://www.68k.org/~michael/audiofile/"
+license=('LGPL')
+depends=('gcc-libs' 'alsa-lib')
+makedepends=('asciidoc')
+options=('!libtool')
+source=("http://audiofile.68k.org/audiofile-$pkgver.tar.gz"
+        modern.patch)
+md5sums=('cb2c4fe6e899e688ffe5d1568581cb63'
+         'bd191631b9c4b73775edfa40f38e9875')
+
+prepare() {
+  cd "$srcdir/audiofile-$pkgver"
+  patch -Np1 < "$srcdir/modern.patch"  
+}
+
+build() {
+  cd "$srcdir/audiofile-$pkgver"
+
+  ./configure --prefix=/usr
+  make
+}
+
+package() {
+  cd "$srcdir/audiofile-$pkgver"
+  
+  make -C libaudiofile DESTDIR="$pkgdir" install-libLTLIBRARIES
+  rm $pkgdir/usr/lib/libaudiofile.{so,a,la}
+}
+
+# vim:set ts=2 sw=2 et:

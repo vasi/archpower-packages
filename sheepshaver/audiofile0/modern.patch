@@ -1,0 +1,27 @@
+diff -Naur audiofile-old/examples/Makefile.in audiofile-new/examples/Makefile.in
+--- audiofile-old/examples/Makefile.in	2025-10-20 02:59:26.662290522 -0400
++++ audiofile-new/examples/Makefile.in	2025-10-20 03:24:50.880001667 -0400
+@@ -74,7 +74,7 @@
+ 	$(LDFLAGS) -o $@
+ power_SOURCES = power.c
+ power_OBJECTS = power.$(OBJEXT)
+-power_LDADD = $(LDADD)
++power_LDADD = $(LDADD) -lm
+ power_DEPENDENCIES = $(LIBAUDIOFILE)
+ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
+ depcomp = $(SHELL) $(top_srcdir)/depcomp
+diff -Naur audiofile-old/libaudiofile/modules/SimpleModule.h audiofile-new/libaudiofile/modules/SimpleModule.h
+--- audiofile-old/libaudiofile/modules/SimpleModule.h	2025-10-20 02:59:26.570292255 -0400
++++ audiofile-new/libaudiofile/modules/SimpleModule.h	2025-10-20 03:25:19.011388263 -0400
+@@ -122,8 +122,9 @@
+ 	typedef typename IntTypes<Format>::UnsignedType UnsignedType;
+ 
+ 	static const int kScaleBits = (Format + 1) * CHAR_BIT - 1;
+-	static const int kMinSignedValue = -1 << kScaleBits;
+-
++	static const int kMaxSignedValue = (((1 << (kScaleBits - 1)) - 1) << 1) + 1;
++	static const int kMinSignedValue = -kMaxSignedValue - 1;
++	
+ 	struct signedToUnsigned : public std::unary_function<SignedType, UnsignedType>
+ 	{
+ 		UnsignedType operator()(SignedType x) { return x - kMinSignedValue; }
