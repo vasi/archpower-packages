@@ -44,7 +44,7 @@ Build I've found less-useful personally, but still thought are worth saving, are
 
 To use these, just [build with `makepkg` as usual](https://wiki.archlinux.org/title/Makepkg#Usage)
 
-I strongly suggest building on a ppc64 VM (or modern hardware), and setting up [icecream](https://github.com/icecc/icecream) to distribute builds to a faster box.
+I strongly suggest building on a ppc64 VM (or modern hardware), and setting up [icecream](https://github.com/icecc/icecream) to distribute builds to a faster box. Here is the [cross-compilation setup I use](https://gist.github.com/vasi/1a1de8cac794a6c3896f6531717b6147).
 
 Some builds depend on others in the repo, you'll find out when makepkg complains about missing dependencies. I don't know of a good way to build the whole repo (or a subset) in a dependency-aware way.
 
