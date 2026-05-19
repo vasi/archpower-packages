@@ -33,6 +33,7 @@ Build I've found less-useful personally, but still thought are worth saving, are
 * pbbuttonsd, which used to be critical for handling power management and special buttons on PowerPC laptops, but hasn't been maintained foryears
 * plank, another dock
 * tilde, a CLI editor whose theme I find too bright
+* fresh, a full-featured CLI editor with LSP support, that's just too slow
 
 ## Caveats
 
