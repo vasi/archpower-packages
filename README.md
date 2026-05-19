@@ -15,6 +15,7 @@ A non-exhaustive list:
 * [ncdu](ncdu) to explore directory space usage
 * [neovim](neovim), a fast CLI editor
 * [Ted](ted), a word processor
+* [SheepShaver](sheepshaver-git) for emulating MacOS at nearly full speed
 * [docklike-plugin](xfce4-docklike-plugin), a panel applet for XFCE to allow dock-like semantics (mixed launchers and tasks)
 * Some tools for smaller window managers:
   * [archlinux-xdg-menu](archlinux-xdg-menu) to create menus for many WMs
@@ -22,7 +23,6 @@ A non-exhaustive list:
   * [skippy-xd](skippy-xd-git) for [Exposé](https://en.wikipedia.org/wiki/Mission_Control_(macOS))-like window switching
   * [tint2](tint2), a dock
   * [YAD](yad-gtk2) for UI scripting
-  * [SheepShaver](sheepshaver-git) for emulating MacOS at nearly full speed
 
 Build I've found less-useful personally, but still thought are worth saving, are in the [experimental](experimental) directory:
 
