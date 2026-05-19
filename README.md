@@ -8,7 +8,6 @@ These are mostly quick ports from the [Arch build system](https://wiki.archlinux
 
 A non-exhaustive list:
 
-* [bear](bear) to generate compile_commands.json
 * [libffi7](libffi7) to allow running [recent builds of PowerPC browsers](https://github.com/chzigotzky/Web-Browsers-and-Suites-for-Linux-PPC/releases)
 * [KOffice](tde-office), an office suite from the [Trinity Desktop](https://www.trinitydesktop.org/)
 * [mouseemu](mouseemu) to emulate middle/right button clicks on laptops with a single trackpad button
@@ -26,6 +25,7 @@ A non-exhaustive list:
 
 Build I've found less-useful personally, but still thought are worth saving, are in the [experimental](experimental) directory:
 
+* bear to generate compile_commands.json
 * Geany, a nice GUI text editor that runs far too slowly
 * dte, a CLI text editor I find hard to use
 * Kakoune, a CLI text editor that's quite usable, but not quite as nice as neovim
@@ -33,7 +33,7 @@ Build I've found less-useful personally, but still thought are worth saving, are
 * pbbuttonsd, which used to be critical for handling power management and special buttons on PowerPC laptops, but hasn't been maintained foryears
 * plank, another dock
 * tilde, a CLI editor whose theme I find too bright
-* fresh, a full-featured CLI editor with LSP support, that's just too slow
+* hw-probe, a tool for listing your hardware
 
 ## Caveats
 
