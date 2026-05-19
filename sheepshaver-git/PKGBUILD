@@ -1,0 +1,49 @@
+# Maintainer: Dave Vasilevsky <dave@vasilevsky.ca>
+pkgname=sheepshaver-git
+pkgver=r3580.aff612c4
+pkgrel=1
+pkgdesc="A PowerPC Apple Macintosh emulator"
+arch=(powerpc)
+# Most active fork
+url="https://github.com/kanjitalk755/macemu"
+license=('GPL-2.0-or-later')
+depends=('libxxf86vm' 'libsm')
+makedepends=('git' 'autoconf2.13' 'automake-1.14' 'python-pillow')
+source=('git+https://github.com/vasi/macemu#branch=archpower'
+        'sheepshaver.desktop')
+sha256sums=('SKIP'
+            '0889890eace99175c9c75c852130ed3c12242378c5eac2eb39eac492a95cdb38')
+
+pkgver() {
+    cd "$srcdir/macemu"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$srcdir/macemu/SheepShaver/src/Unix"
+    NO_CONFIGURE=1 ./autogen.sh
+    ./configure \
+        --prefix=/usr \
+        --target=powerpc-unknown-linux-gnu \
+        --disable-sdl-audio \
+        --disable-sdl-video \
+        --without-gtk \
+        --enable-vosf
+    make
+}
+
+package() {
+    cd "$srcdir/macemu/SheepShaver/src/Unix"
+    make DESTDIR="$pkgdir" install
+
+    install -Dm644 "$srcdir/sheepshaver.desktop" \
+        "$pkgdir/usr/share/applications/sheepshaver.desktop"
+
+    python3 << EOF
+from PIL import Image
+img = Image.open('$srcdir/macemu/SheepShaver/src/MacOSX/SheepShaver.icns')
+img.icns.getimage((256, 256)).save('$srcdir/sheepshaver.png')
+EOF
+    install -Dm644 "$srcdir/sheepshaver.png" \
+        "$pkgdir/usr/share/icons/hicolor/256x256/apps/sheepshaver.png"
+}
