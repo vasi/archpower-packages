@@ -16,6 +16,7 @@ A non-exhaustive list:
 * [Ted](ted), a word processor
 * [SheepShaver](sheepshaver-git) for emulating MacOS at nearly full speed
 * [docklike-plugin](xfce4-docklike-plugin), a panel applet for XFCE to allow dock-like semantics (mixed launchers and tasks)
+* [Charliecloud](charliecloud-git), a lightweight container implementation. Build/run Dockerfiles like [this one](https://github.com/vasi/apk-cgit) on PowerPC!
 * Some tools for smaller window managers:
   * [archlinux-xdg-menu](archlinux-xdg-menu) to create menus for many WMs
   * [dunst](dunst) for notifications in minimal window managers
