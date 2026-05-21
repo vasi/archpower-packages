@@ -1,0 +1,52 @@
+pkgname=charliecloud-git
+pkgver=0.44.r3.gd7dafde
+pkgrel=1
+pkgdesc="A lightweight, fully unprivileged container implementation for HPC applications"
+arch=('x86_64' 'powerpc')
+license=('Apache-2.0')
+depends=(
+    'cjson'
+    'python'
+    'python-requests'
+    'squashfuse-git' # Needs a fuse3 version of squashfuse
+)
+makedepends=(
+    'bats'
+    'fuse3'
+    'git'
+    'python-pip'
+    'python-sphinx_rtd_theme'
+    'squashfs-tools'
+    'wget'
+)
+optdepends=(
+    'bats: ch-test'
+    'cjson: JSON features'
+    'fuse3: ch-run internal SquashFS mounting'
+    'git: ch-image using build cache'
+    'nvidia-container-toolkit: ch-run inject nVidia GPU libraries'
+    'rsync: ch-image using RSYNC instruction'
+    'shellcheck: ch-test'
+    'squashfs-tools: internal SquashFS mounting'
+    'wget: ch-test'
+)
+source=("git+https://gitlab.com/vasi/charliecloud.git#branch=powerpc")
+sha1sums=('SKIP')
+url="https://charliecloud.io/"
+
+pkgver() {
+    cd charliecloud
+    git describe --long --tags | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
+}
+
+build() {
+    cd charliecloud
+    ./autogen.sh
+    ./configure --prefix=/usr CPPFLAGS=-D_FILE_OFFSET_BITS=64
+    make
+}
+
+package() {
+    cd charliecloud
+    make DESTDIR=${pkgdir} install
+}
