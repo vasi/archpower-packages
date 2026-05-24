@@ -1,0 +1,35 @@
+# Maintainer: John-Michael Mulesa <jmulesa@gmail.com>
+# Contributor: Aaron Fischer <mail@aaron-fischer.net>
+# Contributor: Felix Golatofski <contact@xdfr.de>
+# Contributor: Alexander F Rødseth <xyproto@archlinux.org>
+# Contributor: Marcin Skory <armitage at q84fh dot net>
+# Contributor: dale <dale@archlinux.org>
+# Contributor: Tom Newsom <Jeepster@gmx.co.uk>
+
+pkgname=maelstrom
+pkgver=4.0.1
+pkgrel=1
+pkgdesc='Asteroids-type game with sound and 3D objects'
+arch=('x86_64' 'i686' 'powerpc')
+license=('GPL')
+url="https://github.com/libsdl-org/Maelstrom"
+depends=('sdl3')
+makedepends=('cmake')
+source=("https://github.com/libsdl-org/Maelstrom/releases/download/release-${pkgver}/Maelstrom-${pkgver}.tar.gz"
+        "Maelstrom.desktop")
+sha512sums=('559519eefaabf60e37dd8c406b35e2f0d7f716454f55629936cf07131d24b8258d99cb6f5c2bd109162f035cd04ae917951f55e3e893f8b51a97cde4a2e72c3d'
+            'c190b121cc2043dfb1d60b46af7b9298abdcf73584b399bd034a3a5036462eb41407f7d3f2a01c9485e2ea3a1ed09ff211774c34f1a381be99b3f4e9ae01c641')
+
+build() {
+  cd "Maelstrom-${pkgver}"
+  cmake . -D USE_VENDORED_SDL=False -D STEAM=False -D CMAKE_INSTALL_PREFIX=/usr -D STANDALONE_INSTALL=False
+  cmake --build .
+}
+
+package() {
+  cd "Maelstrom-${pkgver}"
+  DESTDIR="${pkgdir}" cmake --install .
+
+  install -d "${pkgdir}/usr/share/applications"
+  install -m644 "${srcdir}/Maelstrom.desktop" "${pkgdir}/usr/share/applications/Maelstrom.desktop"
+}
