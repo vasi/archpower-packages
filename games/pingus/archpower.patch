@@ -1,0 +1,34 @@
+diff -Naur a/SConscript b/SConscript
+--- a/SConscript	2026-05-25 02:50:33.234627334 -0400
++++ b/SConscript	2026-05-25 04:05:53.339701219 -0400
+@@ -97,7 +97,7 @@
+         self.opts.Add('CPPDEFINES', 'defined constants', [])
+         self.opts.Add('LIBS',       'Additional libraries', [])
+         self.opts.Add('CCFLAGS',    'C Compiler flags', [])
+-        self.opts.Add('CXXFLAGS',   'C++ Compiler flags', ["-O2", "-s"])
++        self.opts.Add('CXXFLAGS',   'C++ Compiler flags', ["-O2"])
+         self.opts.Add('LINKFLAGS',  'Linker Compiler flags', [])
+ 
+         self.opts.Add(BoolVariable('with_opengl',        'Build with OpenGL support', True))
+diff -Naur a/src/engine/display/font.hpp b/src/engine/display/font.hpp
+--- a/src/engine/display/font.hpp	2026-05-25 02:50:34.669863575 -0400
++++ b/src/engine/display/font.hpp	2026-05-25 02:50:58.579705897 -0400
+@@ -17,6 +17,7 @@
+ #ifndef HEADER_PINGUS_ENGINE_DISPLAY_FONT_HPP
+ #define HEADER_PINGUS_ENGINE_DISPLAY_FONT_HPP
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "math/rect.hpp"
+diff -Naur a/src/pingus/collision_map.hpp b/src/pingus/collision_map.hpp
+--- a/src/pingus/collision_map.hpp	2026-05-25 02:50:34.769665473 -0400
++++ b/src/pingus/collision_map.hpp	2026-05-25 03:59:44.470559699 -0400
+@@ -17,6 +17,7 @@
+ #ifndef HEADER_PINGUS_PINGUS_COLLISION_MAP_HPP
+ #define HEADER_PINGUS_PINGUS_COLLISION_MAP_HPP
+ 
++#include <cstdint>
+ #include <memory>
+ 
+ #include "engine/display/sprite.hpp"
