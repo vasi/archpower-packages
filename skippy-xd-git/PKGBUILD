@@ -5,8 +5,8 @@
 
 _pkgname="skippy-xd"
 pkgname="$_pkgname-git"
-pkgver=2025.10.05.r0.g87f080e
-pkgrel=2
+pkgver=2026.06.24.r7.gac3acb2
+pkgrel=1
 pkgdesc="A full-screen task switcher for X11, similar to Overview and Exposé"
 url="https://github.com/felixfung/skippy-xd"
 license=("GPL-2.0-or-later")
