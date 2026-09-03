@@ -6,32 +6,25 @@ _cat=applications/office/
 _kdemod="${_mod/tde/kde}"
 
 pkgname="tde-${_mod}"
-pkgver=14.1.4
+pkgver=14.1.6
 pkgrel=1
 pkgdesc="TDE KOffice suite"
 arch=(i686 x86_64 aarch64 armv7h powerpc64le powerpc64 powerpc riscv64 espresso)
 url="https://scm.trinitydesktop.org/scm/git/${_mod}"
 license=('GPL')
 groups=('tde-extra')
-depends=('tde-tdebase')
+depends=('tde-tdebase' 'python')
 makedepends=('pkgconfig' 'automake')
 provides=("${_mod}")
 conflicts=("trinity-${_kdemod}" "kdemod3-${_kdemod}")
 replaces=("trinity-${_mod}")
 options=('staticlibs' 'libtool' '!emptydirs' '!debug')
-source=("https://mirror.ppa.trinitydesktop.org/trinity/releases/R${pkgver}/main/${_cat}${_mod}-trinity-${pkgver}.tar.xz"
-        "xsltfilter.patch")
-md5sums=('b768c65065a2c58022635402901bf709'
-         '128425ce1dc1536d822bb7ec0af91b92')
+source=("https://mirror.ppa.trinitydesktop.org/trinity/releases/R${pkgver}/main/${_cat}${_mod}-trinity-${pkgver}.tar.xz")
+md5sums=('c478ab7d32e14e385ad265cec5931b8c')
 install=''
 
 [ -n "$TDEDIR" ] || TDEDIR=/opt/trinity
 [ -n "$TQTDIR" ] || TQTDIR=${TDEDIR}/tqt3
-
-prepare() {
-  cd ${srcdir}/${pkgname#*-}-trinity-${pkgver}
-  patch -Np1 -i ../xsltfilter.patch
-}
 
 build() {
   ## Generate config files and update with autoreconf
