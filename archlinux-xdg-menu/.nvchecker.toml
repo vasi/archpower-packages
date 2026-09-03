@@ -1,0 +1,4 @@
+[archlinux-xdg-menu]
+source = "archpkg"
+strip_release = true
+
