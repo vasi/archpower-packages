@@ -4,13 +4,13 @@
 
 pkgname=ted
 pkgver=2.23
-pkgrel=11
+pkgrel=12
 pkgdesc="Lightweight RTF text processor"
 arch=('x86_64' 'powerpc')
 url="https://www.nllgg.nl/Ted/"
-depends=('freetype2' 'ghostscript' 'gtk2' 'libjpeg' 'libpaper' 'libpng' 'libtiff' 'libxpm' 'pcre' 'zlib')
+depends=('freetype2' 'ghostscript' 'gtk2' 'libjpeg.so' 'libpaper' 'libpng' 'libtiff' 'libxpm' 'pcre' 'zlib')
 license=('GPL')
-makedepends=('inetutils' 'lsb-release')    # hostname and lsb_release commands
+makedepends=('inetutils' 'libjpeg-turbo' 'lsb-release')    # hostname and lsb_release commands
 options=(!makeflags)
 source=(https://ftp.nluug.nl/pub/editors/$pkgname/$pkgname-$pkgver.src.tar.gz
         https://ftp.nluug.nl/pub/editors/ted/ted_nl_NL.tar.gz
@@ -81,4 +81,3 @@ package() {
     tar xf "$_file"
   done
 }
-

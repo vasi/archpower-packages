@@ -6,7 +6,7 @@
 _pkgname="skippy-xd"
 pkgname="$_pkgname-git"
 pkgver=2025.10.05.r0.g87f080e
-pkgrel=1
+pkgrel=2
 pkgdesc="A full-screen task switcher for X11, similar to Overview and Exposé"
 url="https://github.com/felixfung/skippy-xd"
 license=("GPL-2.0-or-later")
@@ -14,7 +14,7 @@ arch=("i686" "x86_64" 'powerpc')
 
 depends=(
   'giflib'
-  'libjpeg'
+  'libjpeg.so'
   'libxcomposite'
   'libxdamage'
   'libxext'
@@ -23,6 +23,7 @@ depends=(
 )
 makedepends=(
   'git'
+  'libjpeg-turbo'
   'meson'
 )
 
