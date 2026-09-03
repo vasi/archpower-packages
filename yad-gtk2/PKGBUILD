@@ -5,7 +5,7 @@
 # Contributor: Ernia <monghitri@aruba.it>
 
 pkgname=yad-gtk2
-pkgver=0.42.85
+pkgver=0.42.90
 pkgrel=1
 pkgdesc='Gtk2 fork of yad'
 url='https://github.com/step-/yad'
@@ -15,7 +15,7 @@ depends=('gtk2')
 conflicts=('yad')
 makedepends=('autoconf' 'automake' 'intltool')
 source=("https://github.com/step-/yad/archive/refs/tags/${pkgver}.tar.gz")
-sha256sums=('c50756a1cf6ba35167ef77a69b7733ee6d16a1912332c4f66db75b2f18ec7fc6')
+sha256sums=('afcebd8582977f4032a04755bddd28b0d7d60e1425b50f5cc7707377809170f2')
 
 prepare() {
   cd "${srcdir}/yad-${pkgver}"

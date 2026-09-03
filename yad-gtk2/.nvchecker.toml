@@ -1,4 +1,4 @@
-[yad]
-source = "git"
-git = "https://github.com/v1cont/yad.git"
-prefix = "v"
+[yad-gtk2]
+source = "github"
+github = "step-/yad"
+use_latest_release = true
