@@ -30,6 +30,9 @@ build() {
   ## Generate config files and update with autoreconf
   cd ${srcdir}/${pkgname#*-}-trinity-${pkgver}
 
+	msg "Updating Makefiles"
+  find . -name Makefile.am -exec sed -i 's/[[:space:]]*-Wnounresolved//g' {} +
+
   msg "Copying system libtool files...."
   cp /usr/share/aclocal/libtool.m4 ./admin/libtool.m4.in
   cp /usr/share/libtool/build-aux/ltmain.sh ./admin/ltmain.sh
