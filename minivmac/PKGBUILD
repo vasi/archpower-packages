@@ -6,7 +6,7 @@
 # Contributor: William Termini <aur@termini.me>
 
 pkgname=minivmac-git
-pkgver=r41.0638fb0
+pkgver=r43.f4d08ef
 pkgrel=1
 pkgdesc="A miniature early Macintosh emulator"
 arch=(powerpc) 
@@ -16,23 +16,16 @@ depends=('bash' 'libx11')
 source=("git+https://github.com/minivmac/minivmac"
         minivmac.desktop
         minivmac.png
-        ppc32.patch
 )
 sha256sums=('SKIP'
             'b7790404a7ef404234cf25d5e29c0e830827841c02519999f321e330c02366ac'
-            'f003d3c5a92442f3f143153879a7a21e301d447e850ebba119605a2a733f6e2b'
-            '080b2674b942ed1d164b9846f322dde934fad31612f900a2fed36c04d420bc12')
+            'f003d3c5a92442f3f143153879a7a21e301d447e850ebba119605a2a733f6e2b')
 
 pkgver() {
   cd "$srcdir/minivmac"
   printf 'r%s.%s' \
     "$(git rev-list --count HEAD)" \
     "$(git rev-parse --short=7 HEAD)"
-}
-
-prepare() {
-  cd $srcdir/minivmac
-  patch -N -p1 -i ../ppc32.patch
 }
 
 build() {
